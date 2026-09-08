@@ -9,6 +9,10 @@ class Blog < ApplicationRecord
 
   scope :published, -> { where('secret = FALSE') }
 
+  scope :accessible_to, lambda { |user|
+    published.or(Blog.where(user:))
+  }
+
   scope :search, lambda { |term|
     escaped_term = sanitize_sql_like(term.to_s)
 

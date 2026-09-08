@@ -10,7 +10,7 @@ class BlogsController < ApplicationController
   end
 
   def show
-    accessible_blogs = Blog.published.or(Blog.where(user: current_user))
+    accessible_blogs = Blog.accessible_to(current_user)
     @blog = accessible_blogs.find(params[:id])
   end
 
